@@ -2,7 +2,7 @@ from json import loads
 
 from requests import get
 
-file = open("../proxies.getter.txt", 'w')
+file = open("proxies.getter.txt", 'w')
 http = get("https://www.89ip.cn/tqdl.html?api=1&num=9999").text
 if http == "":
     print("[0] Proxies Get With Error!")
@@ -23,7 +23,7 @@ else:
     text = ""
     for txt in js["data"]:
         text = txt["ip"] + "\n"
-    file = open("../proxies.getter.txt", 'a')
+    file = open("proxies.getter.txt", 'a')
     if not file.write(text) == 0:
         print("[1] Proxies Get Success!")
         file.close()
@@ -34,7 +34,7 @@ http = get("http://www.69ip.cn/php.69ip.cn.php?quantity=9999").text
 if http == "":
     print("[2] Proxies Get With Error!")
 else:
-    file = open("../proxies.getter.txt", 'a')
+    file = open("proxies.getter.txt", 'a')
     if not file.write(http.replace(
             "<!DOCTYPE html>\n      <meta\"utf-8\"/>\n<meta http-equiv=\"Content-Type\" content=\"text/php; charset=utf-8\"/>\n<html>\n  <head>\n    <title>69ä»£çIPæåå·¥å·</title>\n  </head>\n  <body>\n      <body ondragstart=\"window.event.returnValue=false\" oncontextmenu=\"window.event.returnValue=false\" onselectstart=\"event.returnValue=false\">\n\n",
             "").replace("<br />", "")) == 0:
@@ -50,7 +50,7 @@ else:
     js = loads(http)
     for txt in js["data"]:
         text = txt["ipPort"] + "\n"
-    file = open("../proxies.getter.txt", 'a')
+    file = open("proxies.getter.txt", 'a')
     if not file.write(text) == 0:
         print("[3] Proxies Get Success!")
         file.close()
@@ -62,7 +62,7 @@ http = get(
 if http == "":
     print("[4] Proxies Get With Error!")
 else:
-    file = open("../proxies.getter.txt", 'a')
+    file = open("proxies.getter.txt", 'a')
     if not file.write(http) == 0:
         print("[4] Proxies Get Success!")
         file.close()
@@ -81,7 +81,7 @@ else:
         arg = arg + 3
         if txt[arg] == "Free":
             break
-    file = open("../proxies.getter.txt", 'a')
+    file = open("proxies.getter.txt", 'a')
     if not file.write(text) == 0:
         print("[5] Proxies Get Success!")
         file.close()

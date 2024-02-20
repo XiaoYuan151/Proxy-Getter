@@ -21,7 +21,7 @@ class CheckThread(Thread):
             global alive
             print(f"[{self.num}] Proxy Alive!")
             print(f"[{self.num}] Writing into files...")
-            file = open("../proxies.txt", 'a')
+            file = open("proxies.txt", 'a')
             if not file.write(self.proxy) == 0:
                 print(f"[{self.num}] Proxy Write Success!")
                 file.close()
@@ -33,10 +33,10 @@ class CheckThread(Thread):
 
 
 if __name__ == '__main__':
-    txt = open("../proxies.getter.txt").readlines()
+    txt = open("proxies.getter.txt").readlines()
     url = input("Url For Check (https://bing.com):")
     print("Writing into files...")
-    file = open("../proxies.txt", 'w')
+    file = open("proxies.txt", 'w')
     file.close()
     if url == "":
         url = "https://bing.com"
