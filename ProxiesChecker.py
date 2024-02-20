@@ -33,21 +33,25 @@ class CheckThread(Thread):
 
 
 if __name__ == '__main__':
-    txt = open("proxies.getter.txt").readlines()
-    url = input("Url For Check (https://bing.com):")
-    print("Writing into files...")
-    file = open("proxies.txt", 'w')
-    file.close()
-    if url == "":
-        url = "https://bing.com"
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 '
-                      'Safari/537.36'
-    }
-    num = 0
-    alive = 0
-    for proxy in txt:
-        thread = CheckThread(str(num), proxy)
-        thread.start()
-        num = num + 1
-    print(f"Discovered Alive Proxy {alive}")
+    try:
+        txt = open("proxies.getter.txt").readlines()
+    except:
+        print("No Proxies Found For Check!")
+    else:
+        url = input("Url For Check (https://bing.com):")
+        print("Writing into files...")
+        file = open("proxies.txt", 'w')
+        file.close()
+        if url == "":
+            url = "https://bing.com"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 '
+                          'Safari/537.36'
+        }
+        num = 0
+        alive = 0
+        for proxy in txt:
+            thread = CheckThread(str(num), proxy)
+            thread.start()
+            num = num + 1
+        print(f"Discovered Alive Proxy {alive}")
