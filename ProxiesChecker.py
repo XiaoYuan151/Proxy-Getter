@@ -55,5 +55,5 @@ if __name__ == '__main__':
             thread = CheckThread(str(num), proxy)
             thread.start()
             num = num + 1
-            sleep(3)
+            sleep(0.3)
         print(f"Discovered Alive Proxy {alive}")
