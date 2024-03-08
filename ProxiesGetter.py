@@ -1,139 +1,53 @@
-from json import loads
-
 from requests import get
+from json import loads
+import re
+import os
 
-try:
-    http = get("https://www.89ip.cn/tqdl.html?api=1&num=9999").text
-except:
-    print("[0] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[0] Proxies Get With Error!")
-    else:
-        try:
-            file = open("proxies.getter.txt", 'w')
-        except:
-            print("[0] Proxies Get With Error!")
-        else:
-            if not file.write(http.replace(
-                    "<a href=\"https://proxy.ip3366.net/\" target=\"_blank\" data-type=\"img\"><img src=\"img/hfad.png\"></a><br><script type=\"text/javascript\" src=\"js/jquery.min.js\"></script>\n<div id=\"adarea\"onclick=location.href='https://proxy.ip3366.net/' style=\"cursor: pointer;display: none;position: fixed;right:15px;bottom:15px;width: 285px;height: 250px;background: url(/img/fkad.png) no-repeat;\">\n<div id=\"adclose\" style=\"cursor: pointer; position: absolute;  top: 0px;  right: 0px;  display: block;  width: 20px;  height: 20px;font-family: cursive;background: url(img/close.png) no-repeat;\" title=\"点击关闭\"> </div>\n</div>\n<script type=\"text/javascript\">\n$(function(){\n$('#adarea').slideDown(500);\n$('#adclose').click(function(){\n$('#adarea').slideUp(500);\n});\n});\n</script>\n",
-                    "").replace("<br>", "\n").replace("\n更好用的代理ip请访问：https://proxy.ip3366.net/", "")) == 0:
-                print("[0] Proxies Get Success!")
-                file.close()
-            else:
-                print("[0] Proxies Get With Error!")
-                file.close()
-try:
-    http = get("https://www.docip.net/data/free.json").text
-except:
-    print("[1] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[1] Proxies Get With Error!")
-    else:
-        js = loads(http)
-        text = ""
-        for txt in js["data"]:
-            text = txt["ip"] + "\n"
-        try:
-            file = open("proxies.getter.txt", 'a')
-        except:
-            print("[1] Proxies Get With Error!")
-        else:
-            if not file.write(text) == 0:
-                print("[1] Proxies Get Success!")
-                file.close()
-            else:
-                print("[1] Proxies Get With Error!")
-                file.close()
-try:
-    http = get("http://www.69ip.cn/php.69ip.cn.php?quantity=9999").text
-except:
-    print("[2] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[2] Proxies Get With Error!")
-    else:
-        try:
-            file = open("proxies.getter.txt", 'a')
-        except:
-            print("[2] Proxies Get With Error!")
-        else:
-            if not file.write(http.replace(
-                    "<!DOCTYPE html>\n      <meta\"utf-8\"/>\n<meta http-equiv=\"Content-Type\" content=\"text/php; charset=utf-8\"/>\n<html>\n  <head>\n    <title>69ä»£çIPæåå·¥å·</title>\n  </head>\n  <body>\n      <body ondragstart=\"window.event.returnValue=false\" oncontextmenu=\"window.event.returnValue=false\" onselectstart=\"event.returnValue=false\">\n\n",
-                    "").replace("<br />", "")) == 0:
-                print("[2] Proxies Get Success!")
-                file.close()
-            else:
-                print("[2] Proxies Get With Error!")
-                file.close()
-try:
-    http = get("http://pubproxy.com/api/proxy?limit=5").text
-except:
-    print("[3] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[3] Proxies Get With Error!")
-    else:
-        js = loads(http)
-        text = ""
-        for txt in js["data"]:
-            text = txt["ipPort"] + "\n"
-        try:
-            file = open("proxies.getter.txt", 'a')
-        except:
-            print("[3] Proxies Get With Error!")
-        else:
-            if not file.write(text) == 0:
-                print("[3] Proxies Get Success!")
-                file.close()
-            else:
-                print("[3] Proxies Get With Error!")
-                file.close()
-try:
-    http = get(
-        "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all").text
-except:
-    print("[4] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[4] Proxies Get With Error!")
-    else:
-        try:
-            file = open("proxies.getter.txt", 'a')
-        except:
-            print("[4] Proxies Get With Error!")
-        else:
-            if not file.write(http) == 0:
-                print("[4] Proxies Get Success!")
-                file.close()
-            else:
-                print("[4] Proxies Get With Error!")
-                file.close()
-try:
-    http = get("https://spys.me/proxy.txt").text
-except:
-    print("[5] Proxies Get With Error!")
-else:
-    if http == "":
-        print("[5] Proxies Get With Error!")
-    else:
-        txt = http.split()
-        arg = 21
-        text = ""
-        while True:
-            text = text + txt[arg] + "\n"
-            arg = arg + 3
-            if txt[arg] == "Free":
-                break
-        try:
-            file = open("proxies.getter.txt", 'a')
-        except:
-            print("[5] Proxies Get With Error!")
-        else:
-            if not file.write(text) == 0:
-                print("[5] Proxies Get Success!")
-                file.close()
-            else:
-                print("[5] Proxies Get With Error!")
-                file.close()
+def save_proxies(url):
+    try:
+        http = get(url).text
+    except Exception as e:
+        print(f"Proxies Get With Error from {url}: {e}")
+        return
+
+    if not http:
+        print(f"No proxies retrieved from {url}")
+        return
+
+    # 正则表达式用于提取 IP 地址
+    ips = re.findall(r'\d+\.\d+\.\d+\.\d+', http)
+
+    if not ips:
+        print(f"No proxies found in the response from {url}")
+        return
+
+    try:
+        with open("proxies.getter.txt", 'w') as file:
+            for ip in ips:
+                file.write(ip + '\n')
+        print(f"Proxies retrieved from {url} successfully")
+    except Exception as e:
+        print(f"Error writing proxies from {url} to file: {e}")
+
+def main():
+    urls = [
+        "https://www.89ip.cn/tqdl.html?api=1&num=9999",
+        "https://www.docip.net/data/free.json",
+        "http://www.69ip.cn/php.69ip.cn.php?quantity=9999",
+        "http://pubproxy.com/api/proxy?limit=5",
+        "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all",
+        "https://spys.me/proxy.txt"
+    ]
+
+    # 删除旧的文件
+    try:
+        os.remove("proxies.getter.txt")
+        print("Old file deleted successfully")
+    except Exception as e:
+        print(f"Error deleting old file: {e}")
+
+    for url in urls:
+        save_proxies(url)
+
+if __name__ == "__main__":
+    main()
