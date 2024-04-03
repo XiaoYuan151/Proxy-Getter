@@ -1,8 +1,8 @@
 # ProxyGetter
-从多个API取得代理服务器，并进行检查
+Get proxy servers from multiple APIs and check
 
-## 如何使用
-1.运行 pip3 install -U requests json threading time\
-2.打开 ProxyGetter.py\
-3.等待获取完成后打开 ProxyChecker.py\
-4.获得完全可用的 proxies.txt
+## How to use
+1. Run pip3 install -U requests json threading time\
+2. Open ProxyGetter.py\
+3. Wait for the acquisition to complete and open ProxyChecker.py\
+4. Get a fully usable proxies.txt
