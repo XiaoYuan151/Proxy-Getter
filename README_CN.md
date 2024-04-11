@@ -1,4 +1,4 @@
-# ProxyGetter
+# Proxy-Getter
 
 [EN](README.md) | [CN](README_CN.md)
 
